@@ -1,7 +1,6 @@
-﻿plugins {
+plugins {
     id 'java'
 }
-
 group 'org.springframework'
 version '5.2.7.RELEASE'
 
@@ -13,8 +12,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     compile(project(":spring-context"))
+    compile(project(":spring-instrument"))
+    compile(project(':kotlin-coroutines'))
 }
-
-test {
-    useJUnitPlatform()
-}
+apply plugin: 'java'
