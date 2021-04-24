@@ -75,18 +75,21 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 
 
 	/** Cache of singleton objects: bean name to bean instance. */
+	/**单例池：一级缓存**/
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */
+	/**单例工厂池：三级缓存**/
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** Cache of early singleton objects: bean name to bean instance. */
+	/** 先期创建单例池： 二级缓存*/
 	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
 
-	/** Names of beans that are currently in creation. */
+	/** 创建中单例对象 */
 	private final Set<String> singletonsCurrentlyInCreation =
 			Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
@@ -178,12 +181,12 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 */
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
-		Object singletonObject = this.singletonObjects.get(beanName);
+		Object singletonObject = this.singletonObjects.get(beanName); //一级缓存
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
 			synchronized (this.singletonObjects) {
-				singletonObject = this.earlySingletonObjects.get(beanName);
+				singletonObject = this.earlySingletonObjects.get(beanName);//二级缓存
 				if (singletonObject == null && allowEarlyReference) {
-					ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
+					ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName); //三级缓存
 					if (singletonFactory != null) {
 						singletonObject = singletonFactory.getObject();
 						this.earlySingletonObjects.put(beanName, singletonObject);
@@ -249,6 +252,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					afterSingletonCreation(beanName);
 				}
 				if (newSingleton) {
+					//singletonObjects.put(beanName, singletonObject) -> 二级缓存remover -> 三级缓存remove
 					addSingleton(beanName, singletonObject);
 				}
 			}
