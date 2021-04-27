@@ -1,5 +1,6 @@
 package edu.hawking;
 
+import edu.hawking.service.Aservice;
 import edu.hawking.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -13,8 +14,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-		UserService userService = (UserService) context.getBean("userService");
-		userService.sayHi();
-		System.out.println("running");
+		Aservice aservice = (Aservice) context.getBean("aservice");
+		aservice.sayHi();
 	}
 }

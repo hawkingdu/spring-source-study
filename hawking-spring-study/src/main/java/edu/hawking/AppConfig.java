@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * AppConfig
  **/
 @Configuration
-@ComponentScan("edu.hawking")
+@ComponentScan("edu.hawking.service")
 public class AppConfig {
 }

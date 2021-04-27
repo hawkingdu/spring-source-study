@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * Created by xsls on 2019/6/10.
  */
 @Component
-public class TulingCalculate implements Calculate {
+public class TulingCalculate implements Calculate{
 
     public int add(int numA, int numB) {
         System.out.println("执行目标方法:add");

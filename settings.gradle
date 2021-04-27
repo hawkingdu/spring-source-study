@@ -6,6 +6,7 @@ pluginManagement {
 }
 apply from: "$rootDir/gradle/build-cache-settings.gradle"
 
+
 include "spring-aop"
 include "spring-aspects"
 include "spring-beans"
@@ -31,10 +32,11 @@ include "spring-webflux"
 include "spring-websocket"
 include "framework-bom"
 include "integration-tests"
+include 'hawking-spring-study'
 
 rootProject.name = "spring"
 rootProject.children.each {project ->
 	project.buildFileName = "${project.name}.gradle"
 }
-include 'hawking-spring-study'
+
 

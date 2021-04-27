@@ -45,23 +45,23 @@ public class MainStart {
 		}
 
 	}
-	public static Object getBean(String key) throws IllegalAccessException, InstantiationException {
+	public static Object getBean(String beanName) throws IllegalAccessException, InstantiationException {
 
-		Object singleton = getSingleton(key);
+		Object singleton = getSingleton(beanName);
 		if (singleton != null) {
 			return singleton;
 		}
 
-		RootBeanDefinition rootBeanDefinition = (RootBeanDefinition) beanDefinitionMap.get(key);
+		RootBeanDefinition rootBeanDefinition = (RootBeanDefinition) beanDefinitionMap.get(beanName);
 		Class<?> beanClass = rootBeanDefinition.getBeanClass();
 		// 实例化
 		Object instanceBean = beanClass.newInstance();
 
 		// 创建动态代理
-		instanceBean = new JdkProxyBeanPostProcessor().getEarlyBeanReference(instanceBean, key);
+		instanceBean = new JdkProxyBeanPostProcessor().getEarlyBeanReference(instanceBean, beanName);
 
 		// 添加二级缓存
-		earlySingletonObjects.put(key, instanceBean);
+		earlySingletonObjects.put(beanName, instanceBean);
 
 		for (Field field : beanClass.getDeclaredFields()) {
 			Autowired annotation = field.getAnnotation(Autowired.class);
@@ -73,9 +73,8 @@ public class MainStart {
 				field.set(instanceBean, fieldObj);
 			}
 		}
-
 		// 添加一级缓存
-		singletonObjects.put(key, instanceBean);
+		singletonObjects.put(beanName, instanceBean);
 
 		return instanceBean;
 	}

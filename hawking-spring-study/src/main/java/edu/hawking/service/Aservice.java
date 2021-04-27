@@ -1,5 +1,6 @@
 package edu.hawking.service;
 
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
  * Aservice
  **/
 @Service
-public class Aservice {
+public class Aservice implements BeanNameAware {
 
 	@Autowired
 	Bservice bservice;
@@ -17,11 +18,13 @@ public class Aservice {
 		System.out.println("调用Aservice()构造方法实例化");
 	}
 
-	public Bservice getBservice() {
-		return bservice;
+
+	public void sayHi() {
+		System.out.println("I'm Aservice");
 	}
 
-	public void setBservice(Bservice bservice) {
-		this.bservice = bservice;
+	@Override
+	public void setBeanName(String name) {
+		System.out.printf("BeanNameAware----my name is" + name);
 	}
 }

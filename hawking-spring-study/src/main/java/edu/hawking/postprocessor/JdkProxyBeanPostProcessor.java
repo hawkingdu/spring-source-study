@@ -18,6 +18,6 @@ public class JdkProxyBeanPostProcessor implements SmartInstantiationAwareBeanPos
 			JdkDynamicProxy jdkDynamicProxy = new JdkDynamicProxy(bean);
 			return jdkDynamicProxy.getProxy();
 		}
-		return null;
+		return bean;
 	}
 }

@@ -15,7 +15,6 @@ import java.util.Arrays;
 public class MyLogAdvice implements MethodBeforeAdvice {
 	@Override
 	public void before(Method method, Object[] args, Object target) throws Throwable {
-		System.out.println("执行目标方法【"+method.getName()+"】前操作");
-		System.out.println("参数：" + Arrays.asList(args));
+		System.out.println("执行目标方法【"+method.getName()+"】前操作，参数：" + Arrays.asList(args));
 	}
 }

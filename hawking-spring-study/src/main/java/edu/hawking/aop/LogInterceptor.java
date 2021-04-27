@@ -12,6 +12,7 @@ public class LogInterceptor implements MethodInterceptor {
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		System.out.println("----"+invocation.getMethod().getName()+"方法执行前-------");
 		Object ret = invocation.proceed();
+		System.out.println("----"+invocation.getMethod().getName()+"方法执行结果："+ret);
 		System.out.println("----"+invocation.getMethod().getName()+"方法执行后-------");
 		return ret;
 	}
